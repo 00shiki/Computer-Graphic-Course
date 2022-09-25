@@ -6,10 +6,71 @@
 
 
 ### Programming Language : Javascript
+Pada tugas kali ini kami akan menggunakan bahasa pemrograman Javascript dengan HTML dan CSS. Lebih spesifiknya kita akan menggunakan fitur Canvas pada Javascript.
 
 
-### Documentation
-- Read Image with Js
+## Documentation
+### Read Image with Js
+1. Buat elemen input file dan elemen Canvas pada HTML dengan menggunakan Id yang akan digunakan pada script (Javascript)
+contoh :
+```HTML
+<input type="file" id="image" />
+...
+<canvas id="ourCanvas" />
+```
+![readImage1](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/34c0ea2431d586c09ca2922b97410612c61ea717/img/WhatsApp%20Image%202022-09-25%20at%2020.13.27.jpeg)
+
+2. Masukkan elemen Canvas dan file input ke variable di Javascript
+```js
+const canvas = document.getElementById("ourCanvas");
+      context = canvas.getContext('2d');
+      image = document.getElementById('image');
+```
+3. Tambahkan Event Listener 
+```js
+window.addEventListener('DOMContentLoaded', imageLoader);
+```
+4. Buat fungsi imageLoader 
+```js
+const imageLoader = () => {
+  image.addEventListener('change', handleImage);
+  
+  const handleImage = (ev) => {
+    const file = ev.target.files[0];
+    handleFile(file);
+  }
+}
+```
+5. Buat fungsi HandleFile
+```js
+const handleFile = (file) => {
+  const imageType = /image.*/;
+  
+  //cek apakah file merupakan gambar
+  if(file.type.match(imageType)) {
+    const reader = new FileReader();
+    
+    //fungsi ini akan diesekusi setelah file selesai di upload
+    reader.onLoadend = function(ev) {
+      const tempImageStore = new Image();
+      
+      tempImageStorage.onLoad = function(ev){
+      
+        //menyesuaikan ukuran canvas untuk gambar
+        canvas.height = ev.target.height;
+        canvas.width = ev.target.width;
+        
+        //memasukan gambar ke canvas
+        context.drawImage(ev.target, 0,0);
+      }
+     tempImageStorage.src = event.target.result;
+    }
+    reader.readDataAsDataURL(file);
+  }
+}
+```
+6. Setelah gambar di-upload maka tampilannya akan menjadi seperti berikut:
 <br></br>
-![This is an image](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/34c0ea2431d586c09ca2922b97410612c61ea717/img/WhatsApp%20Image%202022-09-25%20at%2020.13.27.jpeg)
+![readImage1](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/7180b06ec3e982d2a3d391cd699d6110151cc77d/img/WhatsApp%20Image%202022-09-25%20at%2021.51.34.jpeg)
+
 

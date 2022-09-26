@@ -126,3 +126,8 @@ context.fillText = ("Ini adalah text", 10, 50);
 
 ```
 Pada method ``` fillText() ``` diisi dengan text yang akan dimasukkan dan posisi nya di Canvas.
+
+
+
+### - Animate 
+

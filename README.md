@@ -10,7 +10,7 @@ Pada tugas kali ini kami akan menggunakan bahasa pemrograman Javascript dengan H
 
 
 ## Documentation
-### Read Image with Js
+### - Read Image with Js
 1. Buat elemen input file dan elemen Canvas pada HTML dengan menggunakan Id yang akan digunakan pada script (Javascript)
 contoh :
 ```HTML
@@ -74,7 +74,7 @@ const handleFile = (file) => {
 ![readImage1](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/7180b06ec3e982d2a3d391cd699d6110151cc77d/img/WhatsApp%20Image%202022-09-25%20at%2021.51.34.jpeg)
 
 
-### Convert Image to Binary
+### - Convert Image to Binary
 Untuk melakukan convert gambar ke binary ada 3 langkah yaitu : Image -> base64 -> binary <br>
 Jika kita menggunakan source code yang sama seperti di atas, maka untuk lebih jelasnya sebagai berikut:
 
@@ -93,7 +93,7 @@ reader = onLoad = function(e){
 
 ```
 
-2. Ubah base64 String jadi binary (buat fungsi convertDataURIToBinary() )
+2. Ubah base64 String jadi binary (buat fungsi ```convertDataURIToBinary()``` )
 ```js
 function convertDataURIToBinary(dataURI) {
 	var BASE64_MARKER = ';base64,';
@@ -109,3 +109,20 @@ function convertDataURIToBinary(dataURI) {
 	return array;
 }
 ```
+
+### - Query Pixel
+
+### - Draw Text on Canvas
+Cara untuk memasukan tulisan pada Canvas adalah dengan menggunakan salah satu fitur dari Canvas Javascript, lebih jelasnya sebagai berikut: <br>
+Dengan source code yang sama maka :
+```js
+const canvas = document.getElementById("ourCanvas");
+const context = canvas.getContext('2d');
+
+//define font
+context.font = "20px Georgia";
+//Masukkan text ke Canvas
+context.fillText = ("Ini adalah text", 10, 50);
+
+```
+Pada method ``` fillText() ``` diisi dengan text yang akan dimasukkan dan posisi nya di Canvas.

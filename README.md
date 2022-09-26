@@ -74,3 +74,38 @@ const handleFile = (file) => {
 ![readImage1](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/7180b06ec3e982d2a3d391cd699d6110151cc77d/img/WhatsApp%20Image%202022-09-25%20at%2021.51.34.jpeg)
 
 
+### Convert Image to Binary
+Untuk melakukan convert gambar ke binary ada 3 langkah yaitu : Image -> base64 -> binary <br>
+Jika kita menggunakan source code yang sama seperti di atas, maka untuk lebih jelasnya sebagai berikut:
+
+1. Ubah image jadi base64 string
+```js
+//fungsi reader akan ditambah seperti ini:
+reader = onLoad = function(e){
+...
+      var base64Img = e.target.result;
+      var binaryImg = convertDataURIToBinary(base64Img);
+      var blob = new Blob([binaryImg], {type: f.type});
+      blobURL = window.URL.createObjectURL(blob);
+      fileName = f.name;      
+...
+}
+
+```
+
+2. Ubah base64 String jadi binary (buat fungsi convertDataURIToBinary() )
+```js
+function convertDataURIToBinary(dataURI) {
+	var BASE64_MARKER = ';base64,';
+	var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+	var base64 = dataURI.substring(base64Index);
+	var raw = window.atob(base64);
+	var rawLength = raw.length;
+	var array = new Uint8Array(new ArrayBuffer(rawLength));
+
+	for(i = 0; i < rawLength; i++) {
+		array[i] = raw.charCodeAt(i);
+	}
+	return array;
+}
+```

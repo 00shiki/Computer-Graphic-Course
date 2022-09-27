@@ -11,50 +11,61 @@ Pada tugas kali ini kami akan menggunakan bahasa pemrograman Javascript dengan H
 
 ## Documentation
 ### - Read Image with Js
-1. Buat elemen input file dan elemen Canvas pada HTML dengan menggunakan Id yang akan digunakan pada script (Javascript)
-contoh :
+1. Buat web dan sediakan input untuk file <br>
+HTML:
 ```HTML
-<input type="file" id="uploaded-file" />
-...
-<canvas id="ourCanvas" width="500" height="300" style="border:1px solid #000000;"></canvas>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Hello OpenCV.js</title>
+</head>
+<body>
+<h2>Hello OpenCV.js</h2>
+<div>
+  <div class="inputoutput">
+    <img id="imageSrc" alt="No Image" />
+    <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
+  </div>
+</div>
+<script type="text/javascript" src="script.js">
+<script async src="opencv.js" type="text/javascript"></script>
+</script>
+</body>
+</html>
 ```
-![readImage1](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/d0405eacae8ef8be0645d70e134bf1360e255f8a/img/Screenshot%20(576).png)
+Javascript:
+```js
+let imgElement = document.getElementById("imageSrc")
+let inputElement = document.getElementById("fileInput");
+inputElement.addEventListener("change", (e) => {
+  imgElement.src = URL.createObjectURL(e.target.files[0]);
+}, false);
+```
 
-2. Masukkan elemen Canvas dan file input ke variable di Javascript
+2. Masukan file opencv.js, ada dua cara yaitu dengan download dari https://github.com/opencv/opencv/releases  atau copy paste code dari https://docs.opencv.org/3.4.0/opencv.js. Setelah itu sesuaikan directorynya. Dan tambahkan class ini pada Javascript untuk mengecek apakah openCV sudah berhasil diakses
 ```js
-var canvas = document.getElementById("ourCanvas"),
-  context = canvas.getContext('2d'),
-  uploadedFile = document.getElementById('uploaded-file');
-
-```
-3. Tambahkan Event Listener 
-```js
-window.addEventListener('DOMContentLoaded', initImageLoader);
-```
-4. Buat fungsi imageLoader 
-```js
-function initImageLoader() {
-  uploadedFile.addEventListener('change', handleManualUploadedFiles);
-  function handleManualUploadedFiles(ev) {
-    var file = ev.target.files[0];
-    handleFile(file);
+var Module = {
+  // https://emscripten.org/docs/api_reference/module.html#Module.onRuntimeInitialized
+  onRuntimeInitialized() {
+    document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
   }
-
-}
+};
 ```
-5. Buat fungsi HandleFile untuk menampilkan gambar pada canvas
-```js
-async function handleFile(file) {
-  const bmp = await createImageBitmap(file); 
-  canvas.width = bmp.width; 
-  canvas.height = bmp.height; 
-  context.drawImage(bmp, 0, 0);
-}
 
-```
-6. Setelah gambar di-upload maka tampilannya akan menjadi seperti berikut:
-<br></br>
-![readImage1](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/d0405eacae8ef8be0645d70e134bf1360e255f8a/img/Screenshot%20(577).png)
+3. Buat onload function 
+ ```js
+imgElement.onload = function () {
+  let mat = cv.imread(imgElement);
+  cv.imshow('canvasOutput', mat);
+  mat.delete();
+};
+ ```
+ 4. Buat elemen canvas pada html untuk menampilkan gambar.
+ ```HTML
+<canvas id="canvasOutput" ></canvas>
+ ```
+
 
 
 ### - Convert Image to Binary

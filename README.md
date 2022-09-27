@@ -69,39 +69,20 @@ imgElement.onload = function () {
 
 
 ### - Convert Image to Binary
-Untuk melakukan convert gambar ke binary ada 3 langkah yaitu : Image -> base64 -> binary <br>
-Jika kita menggunakan source code yang sama seperti di atas, maka untuk lebih jelasnya sebagai berikut:
-
-1. Ubah image jadi base64 string
-```js
-//fungsi reader akan ditambah seperti ini:
-reader = onLoad = function(e){
-...
-      var base64Img = e.target.result;
-      var binaryImg = convertDataURIToBinary(base64Img);
-      var blob = new Blob([binaryImg], {type: f.type});
-      blobURL = window.URL.createObjectURL(blob);
-      fileName = f.name;      
-...
-}
-
+Untuk mengubah file image menjadi binary menggunakan openCV, kita menggunakan fungsi yang telah disediakan :<br>
+dengan source code yang sama, kita menambahkan canvas untuk menampilkan baniry iamge pada HTML
+``HTML
+<canvas id="canvasBinary"></canvas>
 ```
-
-2. Ubah base64 String jadi binary (buat fungsi ```convertDataURIToBinary()``` )
+pada file script.js, kita tambahkan code berikut:
 ```js
-function convertDataURIToBinary(dataURI) {
-	var BASE64_MARKER = ';base64,';
-	var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-	var base64 = dataURI.substring(base64Index);
-	var raw = window.atob(base64);
-	var rawLength = raw.length;
-	var array = new Uint8Array(new ArrayBuffer(rawLength));
-
-	for(i = 0; i < rawLength; i++) {
-		array[i] = raw.charCodeAt(i);
-	}
-	return array;
-}
+let src = cv.imread('canvasOutput');
+let dst = new cv.Mat();
+cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0);
+cv.adaptiveThreshold(src, dst, 200, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 3, 2);
+cv.imshow('canvasBinary', dst);
+src.delete();
+dst.delete();
 ```
 
 ### - Query Pixel

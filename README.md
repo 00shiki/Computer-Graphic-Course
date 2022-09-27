@@ -70,11 +70,14 @@ imgElement.onload = function () {
 
 ### - Convert Image to Binary
 Untuk mengubah file image menjadi binary menggunakan openCV, kita menggunakan fungsi yang telah disediakan :<br>
-dengan source code yang sama, kita menambahkan canvas untuk menampilkan baniry iamge pada HTML
-``HTML
+dengan source code yang sama, pada file HTML kita menambahkan canvas untuk menampilkan binary image.
+
+1. Tambahkan canvas untuk binary image
+```HTML
 <canvas id="canvasBinary"></canvas>
 ```
-pada file script.js, kita tambahkan code berikut:
+
+2. pada file script.js, kita tambahkan code berikut:
 ```js
 let src = cv.imread('canvasOutput');
 let dst = new cv.Mat();
@@ -98,7 +101,6 @@ const context = canvas.getContext('2d');
 context.font = "20px Georgia";
 //Masukkan text ke Canvas
 context.fillText = ("Ini adalah text", 10, 50);
-
 ```
 Pada method ``` fillText() ``` diisi dengan text yang akan dimasukkan dan posisi nya di Canvas.
 

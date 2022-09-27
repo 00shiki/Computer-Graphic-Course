@@ -14,64 +14,47 @@ Pada tugas kali ini kami akan menggunakan bahasa pemrograman Javascript dengan H
 1. Buat elemen input file dan elemen Canvas pada HTML dengan menggunakan Id yang akan digunakan pada script (Javascript)
 contoh :
 ```HTML
-<input type="file" id="image" />
+<input type="file" id="uploaded-file" />
 ...
-<canvas id="ourCanvas" />
+<canvas id="ourCanvas" width="500" height="300" style="border:1px solid #000000;"></canvas>
 ```
-![readImage1](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/34c0ea2431d586c09ca2922b97410612c61ea717/img/WhatsApp%20Image%202022-09-25%20at%2020.13.27.jpeg)
+![readImage1](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/d0405eacae8ef8be0645d70e134bf1360e255f8a/img/Screenshot%20(576).png)
 
 2. Masukkan elemen Canvas dan file input ke variable di Javascript
 ```js
-const canvas = document.getElementById("ourCanvas");
-      context = canvas.getContext('2d');
-      image = document.getElementById('image');
+var canvas = document.getElementById("ourCanvas"),
+  context = canvas.getContext('2d'),
+  uploadedFile = document.getElementById('uploaded-file');
+
 ```
 3. Tambahkan Event Listener 
 ```js
-window.addEventListener('DOMContentLoaded', imageLoader);
+window.addEventListener('DOMContentLoaded', initImageLoader);
 ```
 4. Buat fungsi imageLoader 
 ```js
-const imageLoader = () => {
-  image.addEventListener('change', handleImage);
-  
-  const handleImage = (ev) => {
-    const file = ev.target.files[0];
+function initImageLoader() {
+  uploadedFile.addEventListener('change', handleManualUploadedFiles);
+  function handleManualUploadedFiles(ev) {
+    var file = ev.target.files[0];
     handleFile(file);
   }
+
 }
 ```
-5. Buat fungsi HandleFile
+5. Buat fungsi HandleFile untuk menampilkan gambar pada canvas
 ```js
-const handleFile = (file) => {
-  const imageType = /image.*/;
-  
-  //cek apakah file merupakan gambar
-  if(file.type.match(imageType)) {
-    const reader = new FileReader();
-    
-    //fungsi ini akan diesekusi setelah file selesai di upload
-    reader.onLoadend = function(ev) {
-      const tempImageStore = new Image();
-      
-      tempImageStorage.onLoad = function(ev){
-      
-        //menyesuaikan ukuran canvas untuk gambar
-        canvas.height = ev.target.height;
-        canvas.width = ev.target.width;
-        
-        //memasukan gambar ke canvas
-        context.drawImage(ev.target, 0,0);
-      }
-     tempImageStorage.src = event.target.result;
-    }
-    reader.readDataAsDataURL(file);
-  }
+async function handleFile(file) {
+  const bmp = await createImageBitmap(file); 
+  canvas.width = bmp.width; 
+  canvas.height = bmp.height; 
+  context.drawImage(bmp, 0, 0);
 }
+
 ```
 6. Setelah gambar di-upload maka tampilannya akan menjadi seperti berikut:
 <br></br>
-![readImage1](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/7180b06ec3e982d2a3d391cd699d6110151cc77d/img/WhatsApp%20Image%202022-09-25%20at%2021.51.34.jpeg)
+![readImage1](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/d0405eacae8ef8be0645d70e134bf1360e255f8a/img/Screenshot%20(577).png)
 
 
 ### - Convert Image to Binary

@@ -106,3 +106,63 @@ Pada method ``` fillText() ``` diisi dengan text yang akan dimasukkan dan posisi
 
 
 ### - Animate 
+Sebelum memulai animasi, kita harus mengosongkan canvas terlebih dahulu dengan method :
+1. KIta gunakan bola sebagai contoh untuk animasi, pertama buat bola di canvas menggunakan code berikut:
+```js
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+const ball = {
+  x: 100,
+  y: 100,
+  radius: 25,
+  color: 'blue',
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+    ctx.closePath();
+    ctx.fillStyle = this.color;
+    ctx.fill();
+  }
+};
+
+ball.draw();
+```
+
+2. Buat function draw untuk memulai animasi
+```js
+function draw() {
+  ctx.clearRect(0,0, canvas.width, canvas.height);
+  ball.draw();
+  ball.x += ball.vx;
+  ball.y += ball.vy;
+  raf = window.requestAnimationFrame(draw);
+}
+```
+
+3. Kali ini kita akan menggunakan pointer mouse untuk meng-triger animasi untuk mulai. Yaitu ketika kursos diarahkan ke canvas maka animasi dimulai, sebaliknya jika pointer diarahkan keluar maka animasi berhenti. Untuk melakukan itu, kita akan membuat event listener dengan parameter 'onchange' , lebih jelasnya sebagai berikut:
+```js
+canvas.addEventListener('mouseover', (e) => {
+  raf = window.requestAnimationFrame(draw);
+});
+
+canvas.addEventListener('mouseout', (e) => {
+  window.cancelAnimationFrame(raf);
+});
+
+//panggil fungsi draw() untuk menjalankan animasi
+ball.draw()
+```
+
+4. Untuk mencegah bola bergeser keluar dari canvas, maka kita pasang boundaries atau batas yang jika bola tersebut melewatinya, bola tersebut akan memantul. Untuk itu tambahkan code berikut pada script:
+```js
+if (ball.y + ball.vy > canvas.height ||
+      ball.y + ball.vy < 0) {
+    ball.vy = -ball.vy;
+  }
+  if (ball.x + ball.vx > canvas.width ||
+      ball.x + ball.vx < 0) {
+    ball.vx = -ball.vx;
+  }
+
+```

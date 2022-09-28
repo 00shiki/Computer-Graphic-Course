@@ -6,11 +6,11 @@
 
 
 ### Programming Language : Javascript
-Pada tugas kali ini kami akan menggunakan bahasa pemrograman Javascript dengan HTML dan CSS. Lebih spesifiknya kita akan menggunakan fitur Canvas pada Javascript.
+Pada tugas kali ini kami akan menggunakan bahasa pemrograman Javascript dengan HTML dan CSS. Lebih spesifiknya kita akan menggunakan fitur Canvas dan openCV js.
 
 
-## Documentation
-### - Read Image with Js
+# Documentation
+## - Read Image with Js
 1. Buat web dan sediakan input untuk file <br>
 HTML:
 ```HTML
@@ -68,7 +68,7 @@ imgElement.onload = function () {
 
 
 
-### - Convert Image to Binary
+## - Convert Image to Binary
 Untuk mengubah file image menjadi binary menggunakan openCV, kita menggunakan fungsi yang telah disediakan :<br>
 dengan source code yang sama, pada file HTML kita menambahkan canvas untuk menampilkan binary image.
 
@@ -88,9 +88,9 @@ src.delete();
 dst.delete();
 ```
 
-### - Query Pixel
+## - Query Pixel
 
-### - Draw Text on Canvas
+## - Draw Text on Canvas
 Cara untuk memasukan tulisan pada Canvas adalah dengan menggunakan salah satu fitur dari Canvas Javascript, lebih jelasnya sebagai berikut: <br>
 Dengan source code yang sama maka :
 ```js
@@ -105,7 +105,7 @@ context.fillText = ("Ini adalah text", 10, 50);
 Pada method ``` fillText() ``` diisi dengan text yang akan dimasukkan dan posisi nya di Canvas.
 
 
-### - Animate 
+## - Animate 
 Sebelum memulai animasi, kita harus mengosongkan canvas terlebih dahulu dengan method :
 1. KIta gunakan bola sebagai contoh untuk animasi, pertama buat bola di canvas menggunakan code berikut:
 ```js
@@ -166,3 +166,25 @@ if (ball.y + ball.vy > canvas.height ||
   }
 
 ```
+## - Button
+Untuk membuat button , menggunakan elemen HTML yaitu ```<button>``` dan pada javascript kita menggunakan eventlistener untuk merender fungsinya. Sebagai contoh kita akan menggunakan source code dari dokumentasi animasi. Kita akan membuat button untuk memulai dan menghentikan animasi.
+1. Buat elemen button pada HTML
+```HTML
+<button id="btnStart">Start</button>
+<button id="btnStop">Stop</button>
+```
+2. Buat event listener pada script
+```js
+const btnstart = document.getElementById('btnStart');
+btnstart.addEventListener('click', (e) => {
+  raf = window.requestAnimationFrame(draw);
+})
+
+
+const btnstop = document.getElementById('btnStop');
+btnstop.addEventListener('click', (e) => {
+  raf = window.cancelAnimationFrame(raf);
+})
+```
+
+  

@@ -6,87 +6,112 @@
 
 
 ### Programming Language : Javascript
-Pada tugas kali ini kami akan menggunakan bahasa pemrograman Javascript dengan HTML dan CSS. Lebih spesifiknya kita akan menggunakan fitur Canvas dan openCV js.
-
+Pada tugas kali ini kami akan menggunakan bahasa pemrograman Javascript dengan HTML dan CSS. Lebih spesifiknya kita akan menggunakan fitur Canvas dan openCV-js. OpenCV-js dipilih karena instalasi (set up) nya yang mudah. Berikut langkah-langkah set up openCV-js pada web :
+1. Buka link script openCV-js di ![link-openCV-js](https://docs.opencv.org/3.4.0/opencv.js.) <br>
+Copy semua code dan paste ke file javascript. Kali ini kita akan menamainya ```opencv.js```
+2. Masukan code ini pada HTML, sesuaikan atrribute src dengan directory file ```opencv.js``` yang sudah dibuat.
+```HTML
+<script async src="opencv.js" type="text/javascript"></script>
+```
 
 # Documentation
 ## - Read Image with Js
-1. Buat web dan sediakan input untuk file <br>
-HTML:
+1. Buat file HTML yang berisi input dan canvas.
 ```HTML
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>Hello OpenCV.js</title>
+<title>Komgraf</title>
 </head>
 <body>
-<h2>Hello OpenCV.js</h2>
+<h2>KOMGRAF</h2>
+<p id="status">OpenCV.js is loading...</p>
 <div>
   <div class="inputoutput">
-    <img id="imageSrc" alt="No Image" />
+    <img id="imageSrc" alt="No Image"/>
     <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
+  </div>        
+  <div class="inputoutput">
+    <canvas id="canvasOutput" ></canvas>
+    <div class="caption">canvasOutput</div>
   </div>
 </div>
 <script type="text/javascript" src="script.js">
-<script async src="opencv.js" type="text/javascript"></script>
 </script>
+<script async src="opencv.js" type="text/javascript"></script>
 </body>
 </html>
 ```
-Javascript:
-```js
-let imgElement = document.getElementById("imageSrc")
-let inputElement = document.getElementById("fileInput");
-inputElement.addEventListener("change", (e) => {
-  imgElement.src = URL.createObjectURL(e.target.files[0]);
-}, false);
-```
-
-2. Masukan file opencv.js, ada dua cara yaitu dengan download dari https://github.com/opencv/opencv/releases  atau copy paste code dari https://docs.opencv.org/3.4.0/opencv.js. Setelah itu sesuaikan directorynya. Dan tambahkan class ini pada Javascript untuk mengecek apakah openCV sudah berhasil diakses
-```js
-var Module = {
+ 2. Pada ```script.js``` tambahkan code ini pada javasript untuk mengecek apakah openCV sudah berfungsi.
+ ```js
+ var Module = {
   // https://emscripten.org/docs/api_reference/module.html#Module.onRuntimeInitialized
   onRuntimeInitialized() {
     document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
   }
 };
 ```
-
-3. Buat onload function 
+ 3. Masukkan canvas dan input ke variabel di Javascript.
  ```js
-imgElement.onload = function () {
+ let imgElement = document.getElementById('imageSrc');
+let inputElement = document.getElementById('fileInput');
+inputElement.addEventListener('change', (e) => {
+  imgElement.src = URL.createObjectURL(e.target.files[0]);
+}, false);
+ ```
+ 
+ 4. Buat onload function untuk membaca file dan menampilkannya dalam canvas
+ ```js
+ imgElement.onload = () => {
   let mat = cv.imread(imgElement);
   cv.imshow('canvasOutput', mat);
   mat.delete();
-};
+ };
  ```
- 4. Buat elemen canvas pada html untuk menampilkan gambar.
- ```HTML
-<canvas id="canvasOutput" ></canvas>
- ```
-
-
 
 ## - Convert Image to Binary
-Untuk mengubah file image menjadi binary menggunakan openCV, kita menggunakan fungsi yang telah disediakan :<br>
-dengan source code yang sama, pada file HTML kita menambahkan canvas untuk menampilkan binary image.
+Untuk melakukan konversi gambar biasa ke binary kita akan menggunakan ```function cv.adaptiveThreshold()``` dari openCV. Sebelumnya kita harus menambahkan canvas pada HTML .
 
 1. Tambahkan canvas untuk binary image
 ```HTML
 <canvas id="canvasBinary"></canvas>
 ```
 
-2. pada file script.js, kita tambahkan code berikut:
+2. Masukan code ini pada onload function 
 ```js
 let src = cv.imread('canvasOutput');
 let dst = new cv.Mat();
-cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0);
-cv.adaptiveThreshold(src, dst, 200, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 3, 2);
+cv.threshold(src, dst, 177, 200, cv.THRESH_BINARY);
 cv.imshow('canvasBinary', dst);
 src.delete();
 dst.delete();
 ```
+sehingga onload function akan jadi seperti ini:
+```js
+imgElement.onload = () => {
+  //read image
+  let mat = cv.imread(imgElement);
+  cv.imshow('canvasOutput', mat);
+  mat.delete();
+
+
+  //read image
+  let src = cv.imread('canvasOutput');
+  let dst = new cv.Mat();
+  cv.threshold(src, dst, 177, 200, cv.THRESH_BINARY);
+  cv.imshow('canvasBinary', dst);
+  src.delete();
+  dst.delete();
+};
+
+```
+3. Agar lebih rapi, jadikan image yang sebelumnya pada HTML dijadikan ```display:none``` agar web hanya menampilkan 2 gambar yaitu gambar asli dan binary image
+```HTML
+<img id="imageSrc" alt="No Image" style="display:none"/>
+```
+
+
 
 ## - Query Pixel
 

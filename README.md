@@ -237,25 +237,45 @@ if (ball.y + ball.vy > canvas.height ||
 
 ```
 ## - Button
-Untuk membuat button , menggunakan elemen HTML yaitu ```<button>``` dan pada javascript kita menggunakan eventlistener untuk merender fungsinya. Sebagai contoh kita akan menggunakan source code dari dokumentasi animasi. Kita akan membuat button untuk memulai dan menghentikan animasi.
-1. Buat elemen button pada HTML
+Untuk membuat button , menggunakan elemen HTML yaitu ```<button>``` dengan properti ```onclick()```. 
+1. Buat button pada HTML
 ```HTML
-<button id="btnStart">Start</button>
-<button id="btnStop">Stop</button>
+<button onclick="convert()">Mulai Konversi</button>
 ```
-2. Buat event listener pada script
+2. Buat fungsi ```convert()``` pada ```script.js``` yang isinya adalah fungsi yang sudah kita buat untuk Get Pixel
 ```js
-const btnstart = document.getElementById('btnStart');
-btnstart.addEventListener('click', (e) => {
-  raf = window.requestAnimationFrame(draw);
-})
+const convert = () => {
+  //convert img -> binary
+  let src = cv.imread('canvasOutput');
+  let dst = new cv.Mat.eye(src.rows, src.cols, src.type());
+  cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0);
+  cv.adaptiveThreshold(src, dst, 200, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 3, 2);
+  cv.imshow('canvasBinary', dst);
 
+  //Buat matriks pixel
+  let r = [];
+  for (let i = 0; i < dst.rows; i++) {
+    let c = [];
+    for (let j = 0; j < dst.cols; j++) {
+      if (dst.isContinuous()) {
+        let A = dst.data[i * dst.cols * dst.channels() + j * dst.channels() + 3];
+        if (A === 0) {
+          c.push(1);
+        } else {
+          c.push(0);
+        }
+      }
+    }
+    r.push(c);
+    c = [];
+  }
 
-const btnstop = document.getElementById('btnStop');
-btnstop.addEventListener('click', (e) => {
-  raf = window.cancelAnimationFrame(raf);
-})
+  console.table(r);
+  src.delete();
+  dst.delete();
+}
 ```
+
 
 
 

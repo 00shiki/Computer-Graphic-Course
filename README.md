@@ -114,6 +114,51 @@ imgElement.onload = () => {
 
 
 ## - Query Pixel
+Untuk mengubah gambar menjadi matrix kita menggunakan method yang disediakan oleh openCV js. Dalam openCV js pixel diambil menggunakan RGBA, untuk mengkonversi gambar binary ke matriks kita hanya akan menggunakan nilai alpha saja.
+1. Buat 2d array 
+```js
+let r = [];
+  for (let i = 0; i < dst.rows; i++) {
+    let c = [];
+    for (let j = 0; j < dst.cols; j++) {
+      //masukkan nilai disini
+    }
+    r.push(c);
+    c = [];
+  }
+```
+2. Masukkan method yang mengambil nilai alpha dari pixel gambar pada loop. Sehingga loop akan menjadi seperti ini:
+```js
+let r = [];
+  for (let i = 0; i < dst.rows; i++) {
+    let c = [];
+    for (let j = 0; j < dst.cols; j++) {
+      let A = dst.data[i * dst.cols * dst.channels() + j * dst.channels() + 3];
+    }
+    r.push(c);
+    c = [];
+  }
+
+```
+3. Tambahkan kondisi jika nilai Alpha = 1 maka masukkan nilai 0 pada array, jika Alpha=0 masukkan 1 pada aray. Sehingga loop akan menjadi seperti ini:
+```js
+let r = [];
+  for (let i = 0; i < dst.rows; i++) {
+    let c = [];
+    for (let j = 0; j < dst.cols; j++) {
+      let A = dst.data[i * dst.cols * dst.channels() + j * dst.channels() + 3];
+      if(A===0){
+        c.push(1);
+      }else {
+        c.push(0);
+      }
+    }
+    r.push(c);
+    c = [];
+  }
+```
+4. Masukkan code pada langkah 3 ke event onload agar ketika gambar selesai di upload, array akan langsung muncul di console.
+
 
 ## - Draw Text on Canvas
 Cara untuk memasukan tulisan pada Canvas adalah dengan menggunakan salah satu fitur dari Canvas Javascript, lebih jelasnya sebagai berikut: <br>

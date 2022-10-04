@@ -276,9 +276,32 @@ const convert = () => {
 }
 ```
 
+## - Display The Result
+Kali ini kita akan menggunakan elemen table HTML untuk menampilkan hasil konversi gamber ke matriks.
+1. Tambahkan elemen ```<div>``` pada html sebagai container dari table yang akan kita buat
+```js
+<div id="table"></div>
+```
+2. Masukkan elemen tersebut kedalam variabel, kemudian buat elemen baru dengan javascript untuk membuat tabel. Lalu untuk isi tabel itu sendiri adalah matriks yang suda kita buat pada bagian convert image to binary
+```js
+let body = document.getElementById('table');
+  let tbl = document.createElement('table');
+  let tblBody = document.createElement('tbody');
+  for(let i=0;i<dst.rows;i++){
+    let tblRow = document.createElement('tr');
+    for(let j=0;j<dst.cols;j++){
+      let tblCol = document.createElement('td');
+      let content = document.createTextNode(`${r[i][j]}`);
+      tblCol.appendChild(content);
+      tblRow.appendChild(tblCol);
+    }
+    tblBody.appendChild(tblRow);
+  }
+  tbl.appendChild(tblBody);
+  body.appendChild(tbl);
 
-
-
+```
+3. Masukkan code di atas pada  fungsi ```conver()``` agar bisa berjalan semestinya.
 
 # Image 
 ![circle](img/circle.png)

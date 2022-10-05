@@ -7,7 +7,7 @@
 
 ### Programming Language : Javascript
 Pada tugas kali ini kami akan menggunakan bahasa pemrograman Javascript dengan HTML dan CSS. Lebih spesifiknya kita akan menggunakan fitur Canvas dan openCV-js. OpenCV-js dipilih karena instalasi (set up) nya yang mudah. Berikut langkah-langkah set up openCV-js pada web :
-1. Buka link script openCV-js di ![link-openCV-js](https://docs.opencv.org/3.4.0/opencv.js.) <br>
+1. Buka link script openCV-js di [link-openCV-js](https://docs.opencv.org/3.4.0/opencv.js.) <br>
 Copy semua code dan paste ke file javascript. Kali ini kita akan menamainya ```opencv.js```
 2. Masukan code ini pada HTML, sesuaikan atrribute src dengan directory file ```opencv.js``` yang sudah dibuat.
 ```HTML
@@ -177,37 +177,40 @@ Pada method ``` fillText() ``` diisi dengan text yang akan dimasukkan dan posisi
 
 ## - Animate 
 Sebelum memulai animasi, kita harus mengosongkan canvas terlebih dahulu dengan method :
-1. KIta gunakan bola sebagai contoh untuk animasi, pertama buat bola di canvas menggunakan code berikut:
+1. KIta gunakan bola sebagai contoh untuk animasi, pertama buat bola yang bergerak menggunakan pointer mouse di canvas menggunakan code berikut:
 ```js
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-
-const ball = {
-  x: 100,
-  y: 100,
-  radius: 25,
-  color: 'blue',
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-    ctx.closePath();
-    ctx.fillStyle = this.color;
-    ctx.fill();
-  }
-};
-
-ball.draw();
-```
-
-2. Buat function draw untuk memulai animasi
-```js
-function draw() {
-  ctx.clearRect(0,0, canvas.width, canvas.height);
-  ball.draw();
-  ball.x += ball.vx;
-  ball.y += ball.vy;
-  raf = window.requestAnimationFrame(draw);
+var canvas=document.getElementById("canvas"),
+    ctx = canvas.getContext("2d");
+canvas.width = canvas.height = 500;//  w  w    w  .d   e  m   o2  s  .    c o  m 
+var targetX = 0,
+    targetY = 0,
+    x = 10,
+    y = 10,
+    velX = 0,
+    velY = 0,
+    speed = 5;
+function update(){
+    var tx = targetX - x,
+        ty = targetY - y,
+        dist = Math.sqrt(tx*tx+ty*ty),
+        rad = Math.atan2(ty,tx),
+        angle = rad/Math.PI * 180;
+        velX = (tx/dist)*speed,
+        velY = (ty/dist)*speed;
+        x += velX
+        y += velY
+        ctx.clearRect(0,0,500,500);
+        ctx.beginPath();
+        ctx.arc(x,y,5,0,Math.PI*2);
+        ctx.fill();
+    setTimeout(update,10);
 }
+update();
+canvas.addEventListener("mousemove", function(e){
+    targetX = e.pageX;
+    targetY = e.pageY;
+});
+  
 ```
 
 3. Kali ini kita akan menggunakan pointer mouse untuk meng-triger animasi untuk mulai. Yaitu ketika kursos diarahkan ke canvas maka animasi dimulai, sebaliknya jika pointer diarahkan keluar maka animasi berhenti. Untuk melakukan itu, kita akan membuat event listener dengan parameter 'onchange' , lebih jelasnya sebagai berikut:
@@ -301,7 +304,7 @@ let body = document.getElementById('table');
   body.appendChild(tbl);
 
 ```
-3. Masukkan code di atas pada  fungsi ```conver()``` agar bisa berjalan semestinya.
+3. Masukkan code di atas pada  fungsi ```convert()``` agar bisa berjalan semestinya.
 
 # Image 
 ![circle](img/circle.png)

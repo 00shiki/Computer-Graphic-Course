@@ -1,8 +1,8 @@
 # Assigment 1
-## Technology Director : Riszky Hermawan
+## Technology Director : Riszky Hermawan (1313620031)
 ## Other team member:
-- Solver : Aditya Firmansyah Soedira
-- Programmer : Ahmad Luhur Pakerti
+- Solver : Aditya Firmansyah Soedira (1313620017)
+- Programmer : Ahmad Luhur Pakerti (1313620028)
 
 
 ### Programming Language : Javascript

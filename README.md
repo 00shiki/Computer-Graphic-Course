@@ -204,7 +204,7 @@ Untuk membuat button , menggunakan elemen HTML yaitu ```<button>``` dengan prope
 1. Buat elemen ```button``` pada HTML, letakkan dibawah elemen ```canvas binary```
 ```HTML
 <button onclick="convert()">Mulai Konversi</button>
-<button onClick="animate()">Mulai Animasi</button>
+<button onclick="anim()">Mulai Animasi</button>
 ```
 2. Buat fungsi ```convert()``` pada ```script.js``` , dan ambil code pada ```onload()``` function yang bagian ini seperti dibawah, sehingga code pada ```convert()``` dan ```onload()``` menjadi seperti ini: <br>
  - img.onload
@@ -247,9 +247,9 @@ const convert = () => {
 
 ```
 
-3. Buat fungsi ```animate()```, dan masukkan code pada langkah bagian Animate tadi ke fungsi ini, sehingga fungsi ```animate``` akan tampak menjadi seperti berikut:
+3. Buat fungsi ```anim()```, dan masukkan code pada langkah bagian Animate tadi ke fungsi ini, sehingga fungsi ```animate``` akan tampak menjadi seperti berikut:
 ```js
-const animate = () => {
+const anim = () => {
   let x = 0;
   let y = 0;
   
@@ -257,7 +257,7 @@ const animate = () => {
     if (y <= canvas.height) {
       x += 1
       ctx.fillStyle = 'green'
-      ctx.fillRect(x, y, 10, 10)
+      ctx.fillRect(x, y, 1, 1)
       window.requestAnimationFrame(loop)
       if (x == canvas.width) {
         x = 0

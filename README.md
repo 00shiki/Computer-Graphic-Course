@@ -148,7 +148,7 @@ let r = [];
 console.table(r)
 ```
 
-3. Pindahkan code dibawah ini dari atas ke bagian paling <b>akhir<b> di ```onload``` function, code ini terletak di bawah method ```cv.tresshold```
+3. Pindahkan code dibawah ini dari atas ke bagian paling <b>akhir</b> di ```onload``` function, code ini terletak di bawah method ```cv.tresshold```
 ```js
 src.delete();
 dst.delete();
@@ -351,7 +351,7 @@ const convert = () => {
 
 # Image 
 ![circle](img/circle.png)
-![circlewithnoise](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/0f3f270ca0a57834590509c401a202735ad83f16/img/circle%20with%20noises.png)
-![similarcircle](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/0f3f270ca0a57834590509c401a202735ad83f16/img/similar%20circles.png)
-![variouscircle](https://github.com/riszkyhermawan/Computer-Graphic-Course/blob/0f3f270ca0a57834590509c401a202735ad83f16/img/various%20circle.png)
+![circlewithnoise](img/circle%20with%20noises.png)
+![similarcircle](img/similar%20circles.png)
+![variouscircle](img/various%20circle.png)
   
